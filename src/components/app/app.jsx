@@ -19,23 +19,22 @@ const App = (props) => {
             name={name}
             style={style}
             date={date}
-          >
-          </Home>
+          />
         </Route>
         <Route path="/login/" exact>
-          <SignIn></SignIn>
+          <SignIn />
         </Route>
         <Route path="/mylist" exact>
-          <MyList></MyList>
+          <MyList />
         </Route>
         <Route path="/films/:id" exact>
-          <Film></Film>
+          <Film />
         </Route>
         <Route path="/films/:id/review" exact>
-          <AddReview></AddReview>
+          <AddReview />
         </Route>
         <Route path="/player/:id" exact>
-          <Player></Player>
+          <Player />
         </Route>
       </Switch>
     </BrowserRouter>
