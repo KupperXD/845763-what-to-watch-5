@@ -9,32 +9,38 @@ import {BrowserRouter, Switch, Route} from "react-router-dom/";
 import PropTypes from "prop-types";
 
 const App = (props) => {
-  const {name, style, date} = props;
+  const {films} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
           <Home
-            name={name}
-            style={style}
-            date={date}
+            films={films}
           />
         </Route>
         <Route path="/login/" exact>
           <SignIn />
         </Route>
         <Route path="/mylist" exact>
-          <MyList />
+          <MyList 
+            film={films[0]}
+          />
         </Route>
         <Route path="/films/:id" exact>
-          <Film />
+          <Film
+            film={films[0]}
+          />
         </Route>
         <Route path="/films/:id/review" exact>
-          <AddReview />
+          <AddReview
+            film={films[0]}
+          />
         </Route>
         <Route path="/player/:id" exact>
-          <Player />
+          <Player
+            film={films[0]}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -42,9 +48,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  name: PropTypes.string.isRequired,
-  style: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  films: PropTypes.array.isRequired,
 };
 
 export default App;
