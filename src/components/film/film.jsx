@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {filmType} from '../../types/index';
 
 const Film = (props) => {
-  const {name, picture, desciption, director, starring, genre, year, rating} = props.film;
+  const {id, name, picture, desciption, director, starring, genre, year, rating} = props.film;
   const {count, level, score} = rating;
 
   return (

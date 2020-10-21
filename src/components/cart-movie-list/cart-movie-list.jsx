@@ -11,7 +11,17 @@ export default class CartMovieList extends PureComponent {
             activeMovie: null,
         };
 
-        this.onHoverHandler = this.onHoverHandler.bind(this);
+        this.onHoverHandler = this.onHoverCard.bind(this);
+    }
+
+    onHoverCard(id) {
+        const currentMovie = this.props.movies.find((movie) => movie.id === id);
+
+        this.setState((oldState) => {
+            return {
+                activeMovie: currentMovie, 
+            }
+        });
     }
 
     render() {
@@ -27,22 +37,12 @@ export default class CartMovieList extends PureComponent {
                             name={name}
                             picture={picture}
                             id={id}
-                            onHoverHandler={this.onHoverHandler}
+                            onHoverCard={this.onHoverCard}
                         />
                     );
                 })}
             </div>
         );
-    }
-
-    onHoverHandler(id) {
-        const currentMovie = this.props.movies.find((movie) => movie.id === id);
-
-        this.setState((oldState) => {
-            return {
-                activeMovie: (oldState.activeMovie !== currentMovie) ? currentMovie : oldState.activeMovie, 
-            }
-        });
     }
 }
 

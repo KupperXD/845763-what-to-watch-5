@@ -3,14 +3,13 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 
 const CartMovie = (props) => {
-    const {name, picture, id, onHoverHandler} = props;
+    const {name, picture, id, onHoverCard} = props;
 
     return (
         <React.Fragment>
         <article className="small-movie-card catalog__movies-card"
                 onMouseOver={() => {
-                    onHoverHandler(id);
-                    console.log('test');
+                    onHoverCard(id);
                 }}>
             <div className="small-movie-card__image">
               <img src={picture} alt={name} width="280" height="175" />
