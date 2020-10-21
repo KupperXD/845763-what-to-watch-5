@@ -35,7 +35,7 @@ const Film = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-                <h2 className="movie-card__title">{name}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
                 <span className="movie-card__year">{year}</span>
@@ -97,7 +97,7 @@ const Film = (props) => {
 
                 <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-  <p className="movie-card__starring"><strong>Starring: {starring.join(',')}</strong></p>
+                <p className="movie-card__starring"><strong>Starring: {starring.join(`,`)}</strong></p>
               </div>
             </div>
           </div>
@@ -168,6 +168,6 @@ const Film = (props) => {
 
 Film.propTypes = {
   film: PropTypes.shape(filmType).isRequired
-}
+};
 
 export default Film;

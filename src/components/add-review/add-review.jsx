@@ -59,6 +59,6 @@ const AddReview = (props) => {
 
 AddReview.propTypes = {
   film: PropTypes.shape(filmType).isRequired
-}
+};
 
 export default AddReview;

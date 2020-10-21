@@ -44,6 +44,6 @@ const Player = (props) => {
 
 Player.propTypes = {
   film: PropTypes.shape(filmType).isRequired,
-}
+};
 
 export default Player;

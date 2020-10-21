@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import {filmType} from '../../types/index';
 
 
 const MyList = (props) => {
-  const {name, picture, id} = props.film; 
+  const {name, picture, id} = props.film;
 
 
   return (
@@ -62,8 +62,8 @@ const MyList = (props) => {
     </React.Fragment>);
 };
 
-MyList.propType = {
-  film: PropType.shape(filmType).isRequired,
-}
+MyList.propTypes = {
+  film: PropTypes.shape(filmType).isRequired,
+};
 
 export default MyList;

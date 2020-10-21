@@ -23,7 +23,7 @@ const App = (props) => {
           <SignIn />
         </Route>
         <Route path="/mylist" exact>
-          <MyList 
+          <MyList
             film={films[0]}
           />
         </Route>
