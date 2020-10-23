@@ -11,7 +11,7 @@ export default class CartMovieList extends PureComponent {
       activeMovie: null,
     };
 
-    this.onHoverHandler = this.onHoverCard.bind(this);
+    this.onHoverCard = this.onHoverCard.bind(this);
   }
 
   onHoverCard(id) {

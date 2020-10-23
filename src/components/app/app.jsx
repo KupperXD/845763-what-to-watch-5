@@ -27,21 +27,49 @@ const App = (props) => {
             film={films[0]}
           />
         </Route>
-        <Route path="/films/:id" exact>
-          <Film
-            film={films[0]}
-          />
-        </Route>
-        <Route path="/films/:id/review" exact>
-          <AddReview
-            film={films[0]}
-          />
-        </Route>
+        <Route
+          path="/films/:id"
+          exact
+          render={(props) => {
+            const id = props.match.params.id;
+
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <Film
+                film={currentFilm}
+              />);
+          }}
+        />
+        <Route
+          path="/films/:id/review"
+          exact
+          render={(props) => {
+            const id = props.match.params.id;
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <AddReview
+                film={currentFilm}
+              />);
+          }}
+        />
         <Route path="/player/:id" exact>
-          <Player
-            film={films[0]}
-          />
+
         </Route>
+        <Route
+          path="/player/:id"
+          exact
+          render={(props) => {
+            const id = props.match.params.id;
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <Player
+                film={currentFilm}
+              />);
+          }}
+        />
       </Switch>
     </BrowserRouter>
   );
