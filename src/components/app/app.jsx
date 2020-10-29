@@ -30,10 +30,8 @@ const App = (props) => {
         <Route
           path="/films/:id"
           exact
-          /* eslint-disable-next-line no-shadow */
-          render={(props) => {
-            // eslint-disable-next-line react/prop-types
-            const id = props.match.params.id;
+          render={({match}) => {
+            const id = match.params.id;
 
             const currentFilm = films.find((film) => film.id === id);
 
@@ -46,10 +44,8 @@ const App = (props) => {
         <Route
           path="/films/:id/review"
           exact
-          /* eslint-disable-next-line no-shadow */
-          render={(props) => {
-            // eslint-disable-next-line react/prop-types
-            const id = props.match.params.id;
+          render={({match}) => {
+            const id = match.params.id;
             const currentFilm = films.find((film) => film.id === id);
 
             return (
@@ -61,10 +57,8 @@ const App = (props) => {
         <Route
           path="/player/:id"
           exact
-          /* eslint-disable-next-line no-shadow */
-          render={(props) => {
-            // eslint-disable-next-line react/prop-types
-            const id = props.match.params.id;
+          render={({match}) => {
+            const id = match.params.id;
             const currentFilm = films.find((film) => film.id === id);
 
             return (
