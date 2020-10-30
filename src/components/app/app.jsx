@@ -9,42 +9,71 @@ import {BrowserRouter, Switch, Route} from "react-router-dom/";
 import PropTypes from "prop-types";
 
 const App = (props) => {
-  const {name, style, date} = props;
+  const {films} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
           <Home
-            name={name}
-            style={style}
-            date={date}
+            films={films}
           />
         </Route>
         <Route path="/login/" exact>
           <SignIn />
         </Route>
         <Route path="/mylist" exact>
-          <MyList />
+          <MyList
+            film={films[0]}
+          />
         </Route>
-        <Route path="/films/:id" exact>
-          <Film />
-        </Route>
-        <Route path="/films/:id/review" exact>
-          <AddReview />
-        </Route>
-        <Route path="/player/:id" exact>
-          <Player />
-        </Route>
+        <Route
+          path="/films/:id"
+          exact
+          render={({match}) => {
+            const id = match.params.id;
+
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <Film
+                film={currentFilm}
+              />);
+          }}
+        />
+        <Route
+          path="/films/:id/review"
+          exact
+          render={({match}) => {
+            const id = match.params.id;
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <AddReview
+                film={currentFilm}
+              />);
+          }}
+        />
+        <Route
+          path="/player/:id"
+          exact
+          render={({match}) => {
+            const id = match.params.id;
+            const currentFilm = films.find((film) => film.id === id);
+
+            return (
+              <Player
+                film={currentFilm}
+              />);
+          }}
+        />
       </Switch>
     </BrowserRouter>
   );
 };
 
 App.propTypes = {
-  name: PropTypes.string.isRequired,
-  style: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  films: PropTypes.array.isRequired,
 };
 
 export default App;

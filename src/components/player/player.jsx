@@ -1,10 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {filmType} from '../../types/index';
 
-const Player = () => {
+const Player = (props) => {
+  const {video} = props.film;
+
   return (
     <React.Fragment>
       <div className="player">
-        <video src="#" className="player__video" poster="/img/player-poster.jpg"></video>
+        <video src={video} className="player__video" poster="/img/player-poster.jpg"></video>
 
         <button type="button" className="player__exit">Exit</button>
 
@@ -36,6 +40,10 @@ const Player = () => {
         </div>
       </div>
     </React.Fragment>);
+};
+
+Player.propTypes = {
+  film: PropTypes.shape(filmType).isRequired,
 };
 
 export default Player;
