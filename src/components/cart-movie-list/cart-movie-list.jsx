@@ -27,7 +27,7 @@ export default class CartMovieList extends PureComponent {
 
       return {
         timeoutPlayMovie: setTimeout(() => {
-          this.setState({activeMovie: currentMovie.id})
+          this.setState({activeMovie: currentMovie.id});
         }, 1000)
       };
     });

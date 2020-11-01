@@ -20,7 +20,7 @@ const CartMovie = (props) => {
             muted={true}
             isPlaying={isPlaying}
             src={video}
-            poster={picture}          
+            poster={picture}
           />
         </div>
         <h3 className="small-movie-card__title">
