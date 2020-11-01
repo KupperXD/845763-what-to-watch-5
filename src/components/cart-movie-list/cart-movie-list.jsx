@@ -8,18 +8,40 @@ export default class CartMovieList extends PureComponent {
     super(props);
 
     this.state = {
-      activeMovie: null,
+      activeMovie: -1,
+      timeoutPlayMovie: null,
     };
 
     this.onHoverCard = this.onHoverCard.bind(this);
+    this.onAnHoverCard = this.onAnHoverCard.bind(this);
   }
 
   onHoverCard(id) {
     const currentMovie = this.props.movies.find((movie) => movie.id === id);
 
-    this.setState(() => {
+    this.setState((prevState) => {
+
+      if (prevState.timeoutPlayMovie) {
+        clearTimeout(prevState.timeoutPlayMovie);
+      }
+
       return {
-        activeMovie: currentMovie,
+        timeoutPlayMovie: setTimeout(() => {
+          this.setState({activeMovie: currentMovie.id})
+        }, 1000)
+      };
+    });
+  }
+
+  onAnHoverCard() {
+    this.setState((prevState) => {
+      if (prevState.timeoutPlayMovie) {
+        clearTimeout(prevState.timeoutPlayMovie);
+      }
+
+      return {
+        activeMovie: -1,
+        timeoutPlayMovie: null,
       };
     });
   }
@@ -28,16 +50,20 @@ export default class CartMovieList extends PureComponent {
 
     return (
       <div className="catalog__movies-list">
-        {this.props.movies.map((item) => {
-          const {name, picture, id} = item;
+        {this.props.movies.map((item, index) => {
+          const {name, picture, id, video} = item;
+          const {activeMovie} = this.state;
 
           return (
             <CartMovie
               key={`${id}-i`}
               name={name}
               picture={picture}
+              video={video}
               id={id}
+              isPlaying={activeMovie === index}
               onHoverCard={this.onHoverCard}
+              onAnHoverCard={this.onAnHoverCard}
             />
           );
         })}
