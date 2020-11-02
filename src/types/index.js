@@ -5,7 +5,7 @@ export const filmType = {
   genre: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   video: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   year: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
