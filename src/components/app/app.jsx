@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import Home from "../home/home";
 import AddReview from "../add-review/add-review";
 import Film from "../film/film";
@@ -31,7 +32,7 @@ const App = (props) => {
           path="/films/:id"
           exact
           render={({match}) => {
-            const id = match.params.id;
+            const id = +match.params.id;
 
             const currentFilm = films.find((film) => film.id === id);
 
@@ -45,7 +46,7 @@ const App = (props) => {
           path="/films/:id/review"
           exact
           render={({match}) => {
-            const id = match.params.id;
+            const id = +match.params.id;
             const currentFilm = films.find((film) => film.id === id);
 
             return (
@@ -58,7 +59,7 @@ const App = (props) => {
           path="/player/:id"
           exact
           render={({match}) => {
-            const id = match.params.id;
+            const id = +match.params.id;
             const currentFilm = films.find((film) => film.id === id);
 
             return (
@@ -76,4 +77,9 @@ App.propTypes = {
   films: PropTypes.array.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

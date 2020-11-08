@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import VideoPlayer from '../video-player/video-player';
 
 const CartMovie = (props) => {
-  const {name, picture, id, video, onHoverCard, onAnHoverCard, isPlaying} = props;
+  const {name, picture, id, video, onHoverCard, onLeaveCard, isPlaying} = props;
 
   return (
     <React.Fragment>
@@ -13,7 +13,7 @@ const CartMovie = (props) => {
           onHoverCard(id);
         }}
         onMouseOut={() => {
-          onAnHoverCard();
+          onLeaveCard();
         }}>
         <div className="small-movie-card__image">
           <VideoPlayer
@@ -38,7 +38,7 @@ CartMovie.propTypes = {
   id: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   onHoverCard: PropTypes.func.isRequired,
-  onAnHoverCard: PropTypes.func.isRequired,
+  onLeaveCard: PropTypes.func.isRequired,
 };
 
 export default CartMovie;
