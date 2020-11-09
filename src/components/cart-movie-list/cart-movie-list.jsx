@@ -13,7 +13,7 @@ export default class CartMovieList extends PureComponent {
     };
 
     this.onHoverCard = this.onHoverCard.bind(this);
-    this.onAnHoverCard = this.onAnHoverCard.bind(this);
+    this.onLeaveCard = this.onLeaveCard.bind(this);
   }
 
   onHoverCard(id) {
@@ -33,7 +33,7 @@ export default class CartMovieList extends PureComponent {
     });
   }
 
-  onAnHoverCard() {
+  onLeaveCard() {
     this.setState((prevState) => {
       if (prevState.timeoutPlayMovie) {
         clearTimeout(prevState.timeoutPlayMovie);
@@ -63,7 +63,7 @@ export default class CartMovieList extends PureComponent {
               id={id}
               isPlaying={activeMovie === index}
               onHoverCard={this.onHoverCard}
-              onAnHoverCard={this.onAnHoverCard}
+              onLeaveCard={this.onLeaveCard}
             />
           );
         })}
