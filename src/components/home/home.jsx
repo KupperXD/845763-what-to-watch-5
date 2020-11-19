@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import CartMovieList from "../cart-movie-list/cart-movie-list";
 import ListGenre from "../list-genre/list-genre";
+import withCartMovieList from "../../hocs/with-cart-movie-list/with-cart-movie-list";
+
+const CartMovieListWrapped = withCartMovieList(CartMovieList);
 
 const Home = (props) => {
   const {films} = props;
@@ -64,7 +67,7 @@ const Home = (props) => {
 
           <ListGenre/>
 
-          <CartMovieList
+          <CartMovieListWrapped
             movies={films}
           />
 
