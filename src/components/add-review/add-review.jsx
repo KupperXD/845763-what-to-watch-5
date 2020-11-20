@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {filmType} from '../../types/index';
 import ReviewPost from '../review-post/review-post';
+import withFieldChange from "../../hocs/with-field-change/with-field-change";
+
+const ReviewPostWrapped = withFieldChange(ReviewPost);
 
 const AddReview = (props) => {
 
@@ -51,7 +54,7 @@ const AddReview = (props) => {
           </div>
         </div>
 
-        <ReviewPost />
+        <ReviewPostWrapped />
 
       </section>
     </React.Fragment>);

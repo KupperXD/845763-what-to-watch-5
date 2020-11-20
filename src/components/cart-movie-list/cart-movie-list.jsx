@@ -1,77 +1,39 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import CartMovie from "../cart-movie/cart-movie";
 import {filmType} from "../../types/index";
 
-export default class CartMovieList extends PureComponent {
-  constructor(props) {
-    super(props);
+const CartMovieList = (props) => {
+  const {movies, activeMovie, onHoverCard, onLeaveCard} = props;
 
-    this.state = {
-      activeMovie: -1,
-      timeoutPlayMovie: null,
-    };
+  return (
+    <div className="catalog__movies-list">
+      {movies.map((item, index) => {
+        const {name, picture, id, video} = item;
 
-    this.onHoverCard = this.onHoverCard.bind(this);
-    this.onLeaveCard = this.onLeaveCard.bind(this);
-  }
+        return (
+          <CartMovie
+            key={`${id}-i`}
+            name={name}
+            picture={picture}
+            video={video}
+            id={id}
+            isPlaying={activeMovie === index}
+            onHoverCard={onHoverCard}
+            onLeaveCard={onLeaveCard}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
-  onHoverCard(id) {
-    const currentMovie = this.props.movies.find((movie) => movie.id === id);
-
-    this.setState((prevState) => {
-
-      if (prevState.timeoutPlayMovie) {
-        clearTimeout(prevState.timeoutPlayMovie);
-      }
-
-      return {
-        timeoutPlayMovie: setTimeout(() => {
-          this.setState({activeMovie: currentMovie.id});
-        }, 1000)
-      };
-    });
-  }
-
-  onLeaveCard() {
-    this.setState((prevState) => {
-      if (prevState.timeoutPlayMovie) {
-        clearTimeout(prevState.timeoutPlayMovie);
-      }
-
-      return {
-        activeMovie: -1,
-        timeoutPlayMovie: null,
-      };
-    });
-  }
-
-  render() {
-
-    return (
-      <div className="catalog__movies-list">
-        {this.props.movies.map((item, index) => {
-          const {name, picture, id, video} = item;
-          const {activeMovie} = this.state;
-
-          return (
-            <CartMovie
-              key={`${id}-i`}
-              name={name}
-              picture={picture}
-              video={video}
-              id={id}
-              isPlaying={activeMovie === index}
-              onHoverCard={this.onHoverCard}
-              onLeaveCard={this.onLeaveCard}
-            />
-          );
-        })}
-      </div>
-    );
-  }
-}
 
 CartMovieList.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired
+  movies: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
+  activeMovie: PropTypes.number.isRequired,
+  onLeaveCard: PropTypes.func.isRequired,
+  onHoverCard: PropTypes.func.isRequired,
 };
+
+export default CartMovieList;
