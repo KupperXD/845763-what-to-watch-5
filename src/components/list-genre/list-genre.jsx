@@ -48,14 +48,14 @@ ListGenre.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.startFilms,
-  genre: state.genre,
+  films: state.DATA.startFilms,
+  genre: state.DATA.genre,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onClickGenreFilter(genreName) {
     dispatch(ActionCreator.changeFilter(genreName));
-    dispatch(ActionCreator.getFiltredFIlms());
+    dispatch(ActionCreator.getFiltredFilms());
   },
 });
 

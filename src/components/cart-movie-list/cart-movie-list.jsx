@@ -9,7 +9,9 @@ const CartMovieList = (props) => {
   return (
     <div className="catalog__movies-list">
       {movies.map((item, index) => {
-        const {name, picture, id, video} = item;
+        const {name, id} = item;
+        const picture = item[`poster_image`];
+        const video = item[`preview_video_link`];
 
         return (
           <CartMovie
@@ -18,7 +20,7 @@ const CartMovieList = (props) => {
             picture={picture}
             video={video}
             id={id}
-            isPlaying={activeMovie === index}
+            isPlaying={(activeMovie - 1) === index}
             onHoverCard={onHoverCard}
             onLeaveCard={onLeaveCard}
           />

@@ -5,7 +5,7 @@ import {filmType} from '../../types/index';
 
 
 const MyList = (props) => {
-  const {name, picture, id} = props.film;
+  const {name, [`preview_image`]: picture, id} = props.film;
 
 
   return (
