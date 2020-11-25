@@ -11,7 +11,7 @@ import {AuthorizationStatus} from "./const/const";
 import {fetchFilms} from "./store/api-action";
 
 const api = createApi(
-  () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
 const store = createStore(
