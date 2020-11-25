@@ -70,4 +70,3 @@ const withCartMovieList = (Component) => {
 };
 
 export default withCartMovieList;
-

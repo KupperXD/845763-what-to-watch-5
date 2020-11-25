@@ -78,7 +78,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
+  films: state.DATA.films,
 });
 
 export {App};

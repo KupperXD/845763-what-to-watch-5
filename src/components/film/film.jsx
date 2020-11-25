@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {filmType} from '../../types/index';
 
 const Film = (props) => {
-  const {id, name, picture, desciption, director, starring, genre, year, rating} = props.film;
-  const {count, level, score} = rating;
+  const {film} = props;
+  const {id, name, [`preview_image`]: picture, description, director, starring, genre, released: year, rating, [`scores_count`]: count} = film;
 
   return (
     <React.Fragment>
@@ -83,16 +83,16 @@ const Film = (props) => {
               </nav>
 
               <div className="movie-rating">
-                <div className="movie-rating__score">{score}</div>
+                <div className="movie-rating__score">{rating}</div>
                 <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{level}</span>
+                  <span className="movie-rating__level">bad</span>
                   <span className="movie-rating__count">{`${count}`} ratings</span>
                 </p>
               </div>
 
               <div className="movie-card__text">
                 <p>
-                  {desciption}
+                  {description}
                 </p>
 
                 <p className="movie-card__director"><strong>Director: {director}</strong></p>
