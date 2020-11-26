@@ -1,13 +1,17 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import {connect} from 'react-redux';
 import CartMovieList from "../cart-movie-list/cart-movie-list";
 import ListGenre from "../list-genre/list-genre";
 import withCartMovieList from "../../hocs/with-cart-movie-list/with-cart-movie-list";
+import {AuthorizationStatus} from "../../const/const";
 
 const CartMovieListWrapped = withCartMovieList(CartMovieList);
 
 const Home = (props) => {
-  const {films} = props;
+  const {films, authorization} = props;
+  const isAuthorization = (authorization === AuthorizationStatus.AUTH);
 
   return (
     <div>
@@ -26,11 +30,16 @@ const Home = (props) => {
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
-
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
+            {(isAuthorization
+
+              ? <div className="user-block__avatar">
+                <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+              </div>
+              : <Link
+                to={`/login`}
+              >Sign in</Link>
+            )}
           </div>
         </header>
 
@@ -96,6 +105,13 @@ const Home = (props) => {
 
 Home.propTypes = {
   films: PropTypes.array.isRequired,
+  authorization: PropTypes.string.isRequired,
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+  authorization: state.USER.authorization,
+});
+
+export {Home};
+export default connect(mapStateToProps)(Home);
+

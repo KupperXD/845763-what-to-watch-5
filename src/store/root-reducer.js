@@ -4,11 +4,11 @@ import {data} from "./data/data";
 
 export const NameSpace = {
   DATA: `DATA`,
-  STATE: `STATE`,
+  USER: `USER`,
 };
 
 export default combineReducers({
   [NameSpace.DATA]: data,
-  [NameSpace.STATE]: stateApplication,
+  [NameSpace.USER]: stateApplication,
 });
 

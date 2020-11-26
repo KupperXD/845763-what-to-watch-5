@@ -9,7 +9,7 @@ const CartMovieList = (props) => {
   return (
     <div className="catalog__movies-list">
       {movies.map((item, index) => {
-        const {name, id, posterImage, previewVideoLink} = item;;
+        const {name, id, posterImage, previewVideoLink} = item;
 
         return (
           <CartMovie
