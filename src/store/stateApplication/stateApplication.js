@@ -5,6 +5,7 @@ import {AuthorizationStatus} from "../../const/const";
 
 const initialState = {
   authorization: AuthorizationStatus.NO_AUTH,
+  userData: {},
 };
 
 const stateApplication = (state = initialState, action) => {
@@ -13,10 +14,14 @@ const stateApplication = (state = initialState, action) => {
       return extend(state, {
         authorization: action.payload,
       });
+
+    case ActionType.SET_USER_DATA:
+      return extend(state, {
+        userData: action.payload,
+      });
   }
 
   return state;
 };
-
 
 export {stateApplication};

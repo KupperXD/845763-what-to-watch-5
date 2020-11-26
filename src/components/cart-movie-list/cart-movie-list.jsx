@@ -9,16 +9,14 @@ const CartMovieList = (props) => {
   return (
     <div className="catalog__movies-list">
       {movies.map((item, index) => {
-        const {name, id} = item;
-        const picture = item[`poster_image`];
-        const video = item[`preview_video_link`];
+        const {name, id, posterImage, previewVideoLink} = item;
 
         return (
           <CartMovie
             key={`${id}-i`}
             name={name}
-            picture={picture}
-            video={video}
+            picture={posterImage}
+            video={previewVideoLink}
             id={id}
             isPlaying={(activeMovie - 1) === index}
             onHoverCard={onHoverCard}

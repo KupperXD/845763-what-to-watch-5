@@ -6,14 +6,16 @@ import Film from "../film/film";
 import MyList from "../my-list/my-list";
 import Player from "../player/player";
 import SignIn from "../sign-in/sign-in";
-import {BrowserRouter, Switch, Route} from "react-router-dom/";
+import PrivateRoute from "../private-route/private-route";
+import {Router as BrowserRouter, Switch, Route} from "react-router-dom/";
+import browserHistory from "../../browser-history";
 import PropTypes from "prop-types";
 
 const App = (props) => {
   const {films} = props;
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path="/" exact>
           <Home
@@ -23,11 +25,17 @@ const App = (props) => {
         <Route path="/login/" exact>
           <SignIn />
         </Route>
-        <Route path="/mylist" exact>
-          <MyList
-            film={films[0]}
-          />
-        </Route>
+        <PrivateRoute
+          path="/mylist"
+          exact
+          render={() => {
+            return (
+              <MyList
+                film={films[0]}
+              />
+            );
+          }}
+        />
         <Route
           path="/films/:id"
           exact
@@ -42,7 +50,7 @@ const App = (props) => {
               />);
           }}
         />
-        <Route
+        <PrivateRoute
           path="/films/:id/review"
           exact
           render={({match}) => {

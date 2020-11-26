@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {filmType} from '../../types/index';
 
 const Player = (props) => {
-  const {[`video_link`]: video} = props.film;
+  const {videoLink: video} = props.film;
 
   return (
     <React.Fragment>

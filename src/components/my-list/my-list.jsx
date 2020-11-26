@@ -5,7 +5,7 @@ import {filmType} from '../../types/index';
 
 
 const MyList = (props) => {
-  const {name, [`preview_image`]: picture, id} = props.film;
+  const {name, previewImage, id} = props.film;
 
 
   return (
@@ -35,7 +35,7 @@ const MyList = (props) => {
           <div className="catalog__movies-list">
             <article className="small-movie-card catalog__movies-card">
               <div className="small-movie-card__image">
-                <img src={picture}
+                <img src={previewImage}
                   alt={name} width="280" height="175"/>
               </div>
               <h3 className="small-movie-card__title">
