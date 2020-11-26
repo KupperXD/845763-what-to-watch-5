@@ -2,6 +2,7 @@ import {extend} from '../../utils';
 import {ActionType} from '../action';
 import {filtredFilms} from "../../filtred";
 import {ALL_GENRE} from "../../const/const";
+import {filmsServeToApplicationAdapter} from "../../services/filmsAdapter";
 
 
 const initialState = {
@@ -30,15 +31,12 @@ const data = (state = initialState, action) => {
         films: currentFilms,
       });
 
-    case ActionType.REQUIRE_AUTHORIZATION:
-      return extend(state, {
-        authorization: action.payload,
-      });
-
     case ActionType.LOAD_FILMS:
+      const films = filmsServeToApplicationAdapter(action.payload);
+
       return extend(state, {
-        films: action.payload,
-        startFilms: action.payload,
+        films,
+        startFilms: films,
       });
   }
 

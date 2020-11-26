@@ -5,14 +5,14 @@ import {filmType} from '../../types/index';
 
 const Film = (props) => {
   const {film} = props;
-  const {id, name, [`preview_image`]: picture, description, director, starring, genre, released: year, rating, [`scores_count`]: count} = film;
+  const {id, name, previewImage, description, director, starring, genre, released: year, rating, scoresCount} = film;
 
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={picture} alt={name}/>
+            <img src={previewImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -63,7 +63,7 @@ const Film = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={picture} alt={`${name} poster`} width="218"
+              <img src={previewImage} alt={`${name} poster`} width="218"
                 height="327"/>
             </div>
 
@@ -86,7 +86,7 @@ const Film = (props) => {
                 <div className="movie-rating__score">{rating}</div>
                 <p className="movie-rating__meta">
                   <span className="movie-rating__level">bad</span>
-                  <span className="movie-rating__count">{`${count}`} ratings</span>
+                  <span className="movie-rating__count">{`${scoresCount}`} ratings</span>
                 </p>
               </div>
 

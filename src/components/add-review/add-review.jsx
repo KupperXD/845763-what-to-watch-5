@@ -9,14 +9,14 @@ const ReviewPostWrapped = withFieldChange(ReviewPost);
 
 const AddReview = (props) => {
 
-  const {id, name, picture} = props.film;
+  const {id, name, posterImage} = props.film;
 
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={picture} alt={name}/>
+            <img src={posterImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -49,7 +49,7 @@ const AddReview = (props) => {
           </header>
 
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={picture} alt={`${name} poster`} width="218"
+            <img src={posterImage} alt={`${name} poster`} width="218"
               height="327"/>
           </div>
         </div>
