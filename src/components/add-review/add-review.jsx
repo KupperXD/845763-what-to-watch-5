@@ -1,67 +1,159 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {filmType} from '../../types/index';
-import ReviewPost from '../review-post/review-post';
-import withFieldChange from "../../hocs/with-field-change/with-field-change";
+import {connect} from 'react-redux';
 
-const ReviewPostWrapped = withFieldChange(ReviewPost);
+import {getUser} from "../../store/stateApplication/selectors";
+import {addComments} from "../../store/api-action";
 
-const AddReview = (props) => {
+import Header from './../header/header.jsx';
+import Breadcrumbs from './../breadcrumbs/breadcrumbs.jsx';
+import withFormData from './../../hocs/with-form-data/with-form-data.jsx';
 
-  const {id, name, posterImage} = props.film;
+const RATINGS = [`1`, `2`, `3`, `4`, `5`];
+const RATING_NAME = `rating`;
+const TEXTAREA_NAME = `comment`;
+const MIN_LENGTH_TEXT = 50;
+const MAX_LENGTH_TEXT = 400;
 
-  return (
-    <React.Fragment>
-      <section className="movie-card movie-card--full">
+class AddReview extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this._changeHandler = this._changeHandler.bind(this);
+    this._submitHandler = this._submitHandler.bind(this);
+  }
+
+  render() {
+    const {user, film} = this.props;
+
+    if (!film) {
+      return null;
+    }
+
+    return (
+      <section
+        className="movie-card movie-card--full"
+        style={{backgroundColor: film.backgroundColor || `#fff`}}
+      >
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={posterImage} alt={name}/>
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-
-            <nav className="breadcrumbs">
-              <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                  <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
-                </li>
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
-                </li>
-              </ul>
-            </nav>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </div>
-          </header>
+          <Header user={user}
+            breadcrumbs={<Breadcrumbs film={film}/>}
+          />
 
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={posterImage} alt={`${name} poster`} width="218"
-              height="327"/>
+            <img src={film.posterImage} alt={film.name} width="218" height="327" />
           </div>
         </div>
 
-        <ReviewPostWrapped />
+        <div className="add-review">
+          <form action="#" className="add-review__form" onSubmit={this._submitHandler}>
+            <div className="rating">
+              <div className="rating__stars">
+                {RATINGS.map((rating) => this._renderRating(rating))}
+              </div>
+            </div>
+
+            <div className="add-review__text" style={{backgroundColor: `#fff`}}>
+              {this._renderTextarea()}
+              <div className="add-review__submit">
+                <button className="add-review__btn" type="submit">Post</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
 
       </section>
-    </React.Fragment>);
-};
+    );
+  }
+
+  _renderTextarea() {
+    const {form} = this.props;
+    const textValue = form[TEXTAREA_NAME];
+    return (
+      <textarea
+        className="add-review__textarea"
+        name={TEXTAREA_NAME}
+        id={TEXTAREA_NAME}
+        placeholder="Review text"
+        value={textValue}
+        onChange={this._changeHandler}
+        minLength={MIN_LENGTH_TEXT}
+        maxLength={MAX_LENGTH_TEXT}
+      >
+      </textarea>
+    );
+  }
+
+  _renderRating(value) {
+    const {form} = this.props;
+    const rating = form[RATING_NAME];
+    return (
+      <React.Fragment key={`raring-${value}`}>
+        <input
+          className="rating__input"
+          id={`star-${value}`}
+          type="radio"
+          name={RATING_NAME}
+          value={value}
+          checked={rating === value}
+          onChange={this._changeHandler}
+        />
+        <label
+          className="rating__label"
+          htmlFor={`star-${value}`}
+        >
+          Rating {value}
+        </label>
+      </React.Fragment>
+    );
+  }
+
+  _changeHandler(evt) {
+    const {setValue} = this.props;
+    const target = evt.target;
+
+    if (target) {
+      setValue(target.name, target.value);
+    }
+  }
+
+  _submitHandler(evt) {
+    const {film, form, addCommentsAction} = this.props;
+    const {rating, comment} = form;
+
+    evt.preventDefault();
+
+    if (rating && comment && comment.length >= MIN_LENGTH_TEXT && comment.length <= MAX_LENGTH_TEXT) {
+      addCommentsAction(film.id, rating, comment);
+    }
+  }
+}
 
 AddReview.propTypes = {
-  film: PropTypes.shape(filmType).isRequired
+  user: PropTypes.object.isRequired,
+  film: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  setValue: PropTypes.func.isRequired,
+  addCommentsAction: PropTypes.func.isRequired,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  user: getUser(state),
+});
+
+const mapDispachToProps = (dispatch) => ({
+  addCommentsAction: (id, rating, comment) => dispatch(addComments(id, rating, comment)),
+});
+
+const WithFormReview = withFormData(AddReview);
+
+export {AddReview};
+
+export default connect(mapStateToProps, mapDispachToProps)(WithFormReview);

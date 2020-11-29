@@ -9,7 +9,7 @@ import rootReducer from './store/root-reducer';
 import {ActionCreator} from "./store/action";
 import App from "./components/app/app";
 import {AuthorizationStatus} from "./const/const";
-import {fetchFilms, checkAuth} from "./store/api-action";
+import {fetchFilms, checkAuth, loadPromoFilm} from "./store/api-action";
 import {redirect} from "./store/middleweares/redirect";
 
 const api = createApi(
@@ -27,6 +27,7 @@ const store = createStore(
 Promise.all([
   store.dispatch(fetchFilms()),
   store.dispatch(checkAuth()),
+  store.dispatch(loadPromoFilm()),
 ])
 .then(() => {
   ReactDOM.render(

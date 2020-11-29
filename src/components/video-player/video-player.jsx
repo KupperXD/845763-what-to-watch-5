@@ -13,26 +13,43 @@ export default class VideoPlayer extends PureComponent {
   }
 
   componentDidMount() {
-    const {src, poster} = this.props;
     const video = this._videoRef.current;
 
-    video.src = src;
-    video.poster = poster;
+    if (video) {
+      video.oncanplaythrough = () => {
+        this.setState({
+          isLoading: false,
+        });
+      };
 
-    video.oncanplaythrough = () => this.setState({
-      isLoading: false,
-    });
+      video.onplay = () => {
+        this.setState({
+          isPlaying: true,
+        });
+      };
+
+      video.onpause = () => {
+        this.setState({
+          isPlaying: false,
+        });
+      };
+    }
   }
 
   componentWillUnmount() {
     const video = this._videoRef.current;
 
-    video.oncanplaythrough = null;
+    if (video) {
+      video.oncanplaythrough = null;
+      video.onplay = null;
+      video.onpause = null;
+      video.src = ``;
+    }
   }
 
 
   render() {
-    const {isPlaying, muted} = this.props;
+    const {isPlaying, muted, src, picture} = this.props;
 
     return (
       <Fragment>
@@ -40,12 +57,14 @@ export default class VideoPlayer extends PureComponent {
           muted={muted}
           autoPlay={isPlaying}
           ref={this._videoRef}
+          controls={false}
+          poster={picture}
           style={{
             objectFit: `cover`,
             maxWidth: `100%`,
           }}
         >
-
+          <source src={src} type={`video/${this._getFormatVideo(src)}`}/>
         </video>
       </Fragment>
     );
@@ -57,14 +76,27 @@ export default class VideoPlayer extends PureComponent {
     if (this.props.isPlaying) {
       video.play();
     } else {
-      video.pause();
+      this._resetVideo(video);
+    }
+  }
+
+  _getFormatVideo(src) {
+    const getArray = src.split(`.`);
+    const format = getArray[getArray.length - 1];
+    return format;
+  }
+
+  _resetVideo(video) {
+    if (video) {
+      video.currentTime = 0;
+      video.load();
     }
   }
 }
 
 VideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   muted: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
 };

@@ -5,3 +5,5 @@ export const AuthorizationStatus = {
   AUTH: `AUTH`,
 };
 
+export const BASE_URL = `https://5.react.pages.academy/`;
+

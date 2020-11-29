@@ -9,6 +9,19 @@ const initialState = {
   genre: `All genres`,
   startFilms: [],
   films: [],
+  favorites: [],
+  promoFilm: {},
+  comments: {},
+};
+
+const updateFilm = (film, films) => films.map((it) => film.id === it.id ? film : it);
+
+const updateFavorite = (film, films) => {
+  if (!films.length) {
+    return [film];
+  }
+
+  return updateFilm(film, films);
 };
 
 const data = (state = initialState, action) => {
@@ -37,6 +50,37 @@ const data = (state = initialState, action) => {
       return extend(state, {
         films,
         startFilms: films,
+      });
+
+    case ActionType.LOAD_PROMO_FILMS:
+      const film = filmsServeToApplicationAdapter(action.payload, true);
+
+      return extend(state, {
+        promoFilm: film,
+      });
+
+    case ActionType.UPDATE_FILM:
+      const filmUpdate = filmsServeToApplicationAdapter(action.payload, true);
+
+      return extend(state, {
+        films: updateFilm(filmUpdate, state.films),
+        favorites: updateFavorite(filmUpdate, state.favorites),
+        promoFilm: state.promoFilm ? updateFilm(filmUpdate, [state.promoFilm])[0] : state.promoFilm,
+        startFilms: updateFilm(filmUpdate, state.startFilms),
+      });
+
+    case ActionType.LOAD_COMMENTS:
+      return extend(state, {
+        comments: {
+          [action.payload.id]: action.payload.comments,
+        }
+      });
+
+    case ActionType.LOAD_FAVORITES:
+      const favoriteFilms = filmsServeToApplicationAdapter(action.payload);
+
+      return extend(state, {
+        favorites: favoriteFilms,
       });
   }
 

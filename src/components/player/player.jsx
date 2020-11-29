@@ -1,49 +1,74 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {filmType} from '../../types/index';
+import React from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {getElapsedTime} from "../../utils";
+import withBigPlayer from "../../hocs/with-big-player/with-big-player";
 
 const Player = (props) => {
-  const {videoLink: video} = props.film;
+  const {film, isPlaying, duration, progress, onPlayBtnClick, onFullscreenBtnClick, renderPlayer} = props;
+
+  const {name} = film;
+  const togglerState = progress / duration * 100;
 
   return (
-    <React.Fragment>
-      <div className="player">
-        <video src={video} className="player__video" poster="/img/player-poster.jpg"></video>
+    <div className="player">
+      {renderPlayer(film)}
 
-        <button type="button" className="player__exit">Exit</button>
+      <Link to={`/`} type="button" className="player__exit">Exit</Link>
 
-        <div className="player__controls">
-          <div className="player__controls-row">
-            <div className="player__time">
-              <progress className="player__progress" value="30" max="100"></progress>
-              <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
-            </div>
-            <div className="player__time-value">1:30:29</div>
+      <div className="player__controls">
+        <div className="player__controls-row">
+          <div className="player__time">
+            <progress className="player__progress" value={progress} max={duration}></progress>
+            <div className="player__toggler" style={{left: togglerState + `%`}}>Toggler</div>
           </div>
+          <div className="player__time-value">{getElapsedTime(duration, progress)}</div>
+        </div>
 
-          <div className="player__controls-row">
-            <button type="button" className="player__play">
-              <svg viewBox="0 0 19 19" width="19" height="19">
-                <use xlinkHref="#play-s"></use>
-              </svg>
-              <span>Play</span>
-            </button>
-            <div className="player__name">Transpotting</div>
+        <div className="player__controls-row">
+          <button onClick={onPlayBtnClick} type="button" className="player__play">
 
-            <button type="button" className="player__full-screen">
-              <svg viewBox="0 0 27 27" width="27" height="27">
-                <use xlinkHref="#full-screen"></use>
-              </svg>
-              <span>Full screen</span>
-            </button>
-          </div>
+            {
+              isPlaying
+                ? <React.Fragment>
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#pause"></use>
+                  </svg>
+                  <span>Pause</span>
+                </React.Fragment>
+                : <React.Fragment>
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
+                  </svg>
+                  <span>Play</span>
+                </React.Fragment>
+            }
+          </button>
+
+          <div className="player__name">{name}</div>
+
+          <button onClick={onFullscreenBtnClick} type="button" className="player__full-screen">
+            <svg viewBox="0 0 27 27" width="27" height="27">
+              <use xlinkHref="#full-screen"></use>
+            </svg>
+            <span>Full screen</span>
+          </button>
         </div>
       </div>
-    </React.Fragment>);
+    </div>
+  );
 };
 
 Player.propTypes = {
-  film: PropTypes.shape(filmType).isRequired,
+  film: PropTypes.object,
+  isPlaying: PropTypes.bool.isRequired,
+  duration: PropTypes.number.isRequired,
+  progress: PropTypes.number.isRequired,
+  onPlayBtnClick: PropTypes.func.isRequired,
+  onFullscreenBtnClick: PropTypes.func.isRequired,
+  renderPlayer: PropTypes.func.isRequired,
 };
 
-export default Player;
+
+export {Player};
+export default withBigPlayer(Player);
