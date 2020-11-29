@@ -13,26 +13,23 @@ import PropTypes from "prop-types";
 
 const App = (props) => {
   const {films} = props;
-
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
+        <Route path="/login/" exact>
+          <SignIn />
+        </Route>
         <Route path="/" exact>
           <Home
             films={films}
           />
-        </Route>
-        <Route path="/login/" exact>
-          <SignIn />
         </Route>
         <PrivateRoute
           path="/mylist"
           exact
           render={() => {
             return (
-              <MyList
-                film={films[0]}
-              />
+              <MyList/>
             );
           }}
         />
@@ -47,6 +44,7 @@ const App = (props) => {
             return (
               <Film
                 film={currentFilm}
+                match={match}
               />);
           }}
         />
@@ -69,7 +67,6 @@ const App = (props) => {
           render={({match}) => {
             const id = +match.params.id;
             const currentFilm = films.find((film) => film.id === id);
-
             return (
               <Player
                 film={currentFilm}
@@ -84,6 +81,7 @@ const App = (props) => {
 App.propTypes = {
   films: PropTypes.array.isRequired,
 };
+
 
 const mapStateToProps = (state) => ({
   films: state.DATA.films,

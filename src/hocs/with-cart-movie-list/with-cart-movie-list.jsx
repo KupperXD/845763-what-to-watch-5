@@ -10,17 +10,17 @@ const withCartMovieList = (Component) => {
       this.state = {
         activeMovie: -1,
         timeoutPlayMovie: null,
+        showFilms: props.moviesQuantity,
       };
 
       this.onHoverCard = this.onHoverCard.bind(this);
       this.onLeaveCard = this.onLeaveCard.bind(this);
+      this.onClickShowMore = this.onClickShowMore.bind(this);
     }
 
     onHoverCard(id) {
       const currentMovie = this.props.movies.find((movie) => movie.id === id);
-
       this.setState((prevState) => {
-
         if (prevState.timeoutPlayMovie) {
           clearTimeout(prevState.timeoutPlayMovie);
         }
@@ -46,15 +46,26 @@ const withCartMovieList = (Component) => {
       });
     }
 
+    onClickShowMore() {
+      const {showFilms} = this.state;
+      const {movies} = this.props;
+
+      this.setState({
+        showFilms: showFilms < movies.length ? showFilms + parseInt(this.props.moviesQuantity, 10) : movies.length,
+      });
+    }
+
     render() {
-      const {activeMovie} = this.state;
+      const {activeMovie, showFilms} = this.state;
 
       return (
         <Component
           {...this.props}
           activeMovie={activeMovie}
+          showFilms={showFilms}
           onHoverCard={this.onHoverCard}
           onLeaveCard={this.onLeaveCard}
+          onClickShowMore={this.onClickShowMore}
         >
 
         </Component>
@@ -62,8 +73,14 @@ const withCartMovieList = (Component) => {
     }
   }
 
+  WithCartMovieList.defaultProps = {
+    moviesQuantity: 8,
+  };
+
   WithCartMovieList.propTypes = {
-    movies: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired
+    movies: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
+    moviesQuantity: PropTypes.number,
+    isShowMore: PropTypes.bool,
   };
 
   return WithCartMovieList;

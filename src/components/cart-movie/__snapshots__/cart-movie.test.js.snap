@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<article
+  className="small-movie-card catalog__movies-card"
+  onMouseOut={[Function]}
+  onMouseOver={[Function]}
+>
+  <a
+    className="small-movie-card__link"
+    href="/films/1"
+    onClick={[Function]}
+  >
+    <video
+      autoPlay={true}
+      controls={false}
+      muted={true}
+      poster=""
+      style={
+        Object {
+          "maxWidth": "100%",
+          "objectFit": "cover",
+        }
+      }
+    >
+      <source
+        src=""
+        type="video/"
+      />
+    </video>
+    <h3
+      className="small-movie-card__title"
+    >
+      
+    </h3>
+  </a>
+</article>
+`;

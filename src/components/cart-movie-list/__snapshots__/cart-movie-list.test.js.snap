@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="catalog__movies-list"
+>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+  >
+    <a
+      className="small-movie-card__link"
+      href="/films/1"
+      onClick={[Function]}
+    >
+      <video
+        autoPlay={true}
+        controls={false}
+        muted={true}
+        poster="https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/bronson.jpg"
+        style={
+          Object {
+            "maxWidth": "100%",
+            "objectFit": "cover",
+          }
+        }
+      >
+        <source
+          src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
+          type="video/webm"
+        />
+      </video>
+      <h3
+        className="small-movie-card__title"
+      >
+        Bronson
+      </h3>
+    </a>
+  </article>
+</div>
+`;

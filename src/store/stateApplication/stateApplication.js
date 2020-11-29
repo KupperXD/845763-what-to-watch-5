@@ -1,11 +1,13 @@
 import {extend} from '../../utils';
 import {ActionType} from '../action';
+import {userServeToApplicationAdapter} from "../../services/userAdapter";
 import {AuthorizationStatus} from "../../const/const";
 
 
 const initialState = {
   authorization: AuthorizationStatus.NO_AUTH,
   userData: {},
+  error: undefined,
 };
 
 const stateApplication = (state = initialState, action) => {
@@ -16,8 +18,15 @@ const stateApplication = (state = initialState, action) => {
       });
 
     case ActionType.SET_USER_DATA:
+      const userDataCorrect = userServeToApplicationAdapter(action.payload);
+
       return extend(state, {
-        userData: action.payload,
+        userData: userDataCorrect,
+      });
+
+    case ActionType.LOG_ERROR:
+      return extend(state, {
+        error: action.payload,
       });
   }
 

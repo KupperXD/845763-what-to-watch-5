@@ -1,69 +1,68 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {filmType} from '../../types/index';
+import {connect} from 'react-redux';
 
+import Footer from './../footer/footer.jsx';
+import Header from './../header/header.jsx';
+import CartMovieList from "../cart-movie-list/cart-movie-list";
+import withCartMovieList from "../../hocs/with-cart-movie-list/with-cart-movie-list";
+import {loadFavorite} from "../../store/api-action";
+import {getFavorites} from "../../store/data/selectors";
+import {getUser} from "../../store/stateApplication/selectors";
 
-const MyList = (props) => {
-  const {name, previewImage, id} = props.film;
+const WithCartMovieList = withCartMovieList(CartMovieList);
 
+class MyList extends PureComponent {
+  render() {
+    const {user, favorites} = this.props;
 
-  return (
-    <React.Fragment>
+    return (
       <div className="user-page">
-        <header className="page-header user-page__head">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
 
-          <h1 className="page-title user-page__title">My list</h1>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
-          </div>
-        </header>
+        <Header className={`user-page__head`} title={`My list`} user={user}/>
 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <div className="catalog__movies-list">
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src={previewImage}
-                  alt={name} width="280" height="175"/>
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link to={`/films/${id}`} className="small-movie-card__link">{name}</Link>
-              </h3>
-            </article>
-          </div>
+          {favorites ? (
+            <WithCartMovieList
+              movies={favorites}
+            />
+          ) : (
+            <h3>{`You haven't added any movies to your favorites list.`}</h3>
+          )}
+
+
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
-    </React.Fragment>);
-};
+    );
+  }
+
+  componentDidMount() {
+    const {loadFavorites} = this.props;
+
+    loadFavorites();
+  }
+}
 
 MyList.propTypes = {
-  film: PropTypes.shape(filmType).isRequired,
+  user: PropTypes.object.isRequired,
+  favorites: PropTypes.array,
+  loadFavorites: PropTypes.func,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  favorites: getFavorites(state),
+  user: getUser(state),
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFavorites: () => dispatch(loadFavorite()),
+});
+
+export {MyList};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

@@ -1,0 +1,58 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const RatingType = {
+  BAD: `Bad`,
+  NORMAL: `Normal`,
+  GOOD: `Good`,
+  VERY_GOOD: `Very good`,
+  AWESOME: `Awesome`,
+};
+
+const Overview = ({film}) => {
+  const getRating = (rating) => {
+    switch (rating) {
+      case 10:
+        return RatingType.AWESOME;
+
+      case rating > 8:
+        return RatingType.VERY_GOOD;
+
+      case rating > 5:
+        return RatingType.GOOD;
+
+      case rating > 3:
+        return RatingType.NORMAL;
+
+      default:
+        return RatingType.BAD;
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <div className="movie-rating">
+        <div className="movie-rating__score">{film.rating}</div>
+        <p className="movie-rating__meta">
+          <span className="movie-rating__level">{getRating(film.rating)}</span>
+          <span className="movie-rating__count">{`${film.scoresCount} ratings`}</span>
+        </p>
+      </div>
+
+      <div className="movie-card__text">
+        <p>{film.description}</p>
+
+        <p className="movie-card__director"><strong>Director: {film.director}</strong></p>
+
+        <p className="movie-card__starring"><strong>Starring: {film.starring.map((it) => `${it} ${film.starring.length + 1 && `, `}`)}</strong>
+        </p>
+      </div>
+    </React.Fragment>
+  );
+};
+
+Overview.propTypes = {
+  film: PropTypes.object.isRequired,
+};
+
+export default Overview;
