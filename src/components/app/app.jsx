@@ -68,9 +68,14 @@ const App = (props) => {
         <Route
           path="/player/:id"
           exact
-          render={({match}) => {
+          render={({match, history}) => {
             const id = +match.params.id;
             const currentFilm = films.find((film) => film.id === id);
+
+            if (typeof currentFilm === `undefined`) {
+              history.push(`/login`);
+            }
+
             return (
               <Player
                 film={currentFilm}
