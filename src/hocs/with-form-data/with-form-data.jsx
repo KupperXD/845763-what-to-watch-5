@@ -12,6 +12,14 @@ const withFormData = (Component) => {
       this._setValue = this._setValue.bind(this);
     }
 
+    _setValue(field, value) {
+      this.setState((state) => ({
+        form: Object.assign({}, state.form, {
+          [field]: value,
+        })
+      }));
+    }
+
     render() {
       const {form} = this.state;
 
@@ -22,14 +30,6 @@ const withFormData = (Component) => {
           setValue={this._setValue}
         />
       );
-    }
-
-    _setValue(field, value) {
-      this.setState((state) => ({
-        form: Object.assign({}, state.form, {
-          [field]: value,
-        })
-      }));
     }
   }
 

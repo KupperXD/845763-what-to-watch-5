@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 const Buttons = (props) => {
-  const {film, user, clickHandler, isReview} = props;
+  const {film, user, onClickButton, isReview} = props;
 
   return (
     <div className="movie-card__buttons">
@@ -21,7 +21,7 @@ const Buttons = (props) => {
           className="btn btn--list movie-card__button"
           type="button"
           style={{display: `${user.id ? `block` : `none`}`}}
-          onClick={clickHandler}
+          onClick={onClickButton}
         >
           {film.isFavorite ? (
             <svg viewBox="0 0 18 14" width="18" height="14">
@@ -54,7 +54,7 @@ Buttons.propTypes = {
   film: PropTypes.object.isRequired,
   isReview: PropTypes.bool,
   user: PropTypes.object,
-  clickHandler: PropTypes.func,
+  onClickButton: PropTypes.func,
 };
 
 export default Buttons;

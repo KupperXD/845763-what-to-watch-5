@@ -11,21 +11,16 @@ const RatingType = {
 
 const Overview = ({film}) => {
   const getRating = (rating) => {
-    switch (rating) {
-      case 10:
-        return RatingType.AWESOME;
-
-      case rating > 8:
-        return RatingType.VERY_GOOD;
-
-      case rating > 5:
-        return RatingType.GOOD;
-
-      case rating > 3:
-        return RatingType.NORMAL;
-
-      default:
-        return RatingType.BAD;
+    if (rating === 10) {
+      return RatingType.AWESOME;
+    } else if (rating > 8) {
+      return RatingType.VERY_GOOD;
+    } else if (rating > 5) {
+      return RatingType.GOOD;
+    } else if (rating > 3) {
+      return RatingType.NORMAL;
+    } else {
+      return RatingType.BAD;
     }
   };
 
