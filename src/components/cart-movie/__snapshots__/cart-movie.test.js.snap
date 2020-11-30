@@ -11,23 +11,7 @@ exports[`renders correctly 1`] = `
     href="/films/1"
     onClick={[Function]}
   >
-    <video
-      autoPlay={true}
-      controls={false}
-      muted={true}
-      poster=""
-      style={
-        Object {
-          "maxWidth": "100%",
-          "objectFit": "cover",
-        }
-      }
-    >
-      <source
-        src=""
-        type="video/"
-      />
-    </video>
+    <div />
     <h3
       className="small-movie-card__title"
     >

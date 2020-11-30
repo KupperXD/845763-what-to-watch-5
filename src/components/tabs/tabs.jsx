@@ -7,7 +7,7 @@ import Overview from './overview/overview.jsx';
 
 const DEFAULT_TAB = `Overview`;
 
-const Tabs = ({film, comments, activeItem, clickHandler}) => {
+const Tabs = ({film, comments, activeItem, onClick}) => {
   const showTab = (activeTab) => {
     switch (activeTab) {
       case `Overview`:
@@ -34,7 +34,7 @@ const Tabs = ({film, comments, activeItem, clickHandler}) => {
                   className="movie-nav__link"
                   onClick={(evt) => {
                     evt.preventDefault();
-                    clickHandler(tab);
+                    onClick(tab);
                   }}
                 >{tab}</a>
               </li>
@@ -56,7 +56,7 @@ Tabs.defaultProps = {
 Tabs.propTypes = {
   film: PropTypes.object.isRequired,
   activeItem: PropTypes.string,
-  clickHandler: PropTypes.func,
+  onClick: PropTypes.func,
   comments: PropTypes.array,
 };
 

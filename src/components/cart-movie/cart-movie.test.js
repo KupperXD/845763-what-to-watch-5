@@ -5,6 +5,9 @@ import {BrowserRouter} from "react-router-dom";
 import CartMovie from "./cart-movie";
 
 const noop = () => {};
+const render = () => {
+  return (<div/>);
+};
 
 
 it(`renders correctly`, () => {
@@ -19,6 +22,7 @@ it(`renders correctly`, () => {
             isPlaying={true}
             onHoverCard={noop}
             onLeaveCard={noop}
+            renderVideo={render}
           />
         </BrowserRouter>
     )

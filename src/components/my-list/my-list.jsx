@@ -13,6 +13,16 @@ import {getUser} from "../../store/stateApplication/selectors";
 const WithCartMovieList = withCartMovieList(CartMovieList);
 
 class MyList extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    const {loadFavorites} = this.props;
+
+    loadFavorites();
+  }
+
   render() {
     const {user, favorites} = this.props;
 
@@ -40,11 +50,6 @@ class MyList extends PureComponent {
     );
   }
 
-  componentDidMount() {
-    const {loadFavorites} = this.props;
-
-    loadFavorites();
-  }
 }
 
 MyList.propTypes = {

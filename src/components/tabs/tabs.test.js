@@ -14,7 +14,7 @@ it(`renders correctly`, () => {
         <BrowserRouter>
           <Tabs
             film={films[0]}
-            clickHandler={noop}
+            onClickTabs={noop}
             comments={[]}
             activeItem={``}
           />

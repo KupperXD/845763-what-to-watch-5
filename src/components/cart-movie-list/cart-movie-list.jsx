@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import CartMovie from "../cart-movie/cart-movie";
 import ShowMore from "../show-more/show-more";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
 import {filmType} from "../../types/index";
+
+const CartMovieWrapped = withVideoPlayer(CartMovie);
 
 const CartMovieList = (props) => {
   const {movies, activeMovie, onHoverCard, onLeaveCard, onClickShowMore, showFilms, isShowMore = true} = props;
@@ -14,7 +17,7 @@ const CartMovieList = (props) => {
           const {name, id, previewImage, previewVideoLink} = item;
 
           return (
-            <CartMovie
+            <CartMovieWrapped
               key={`${id}-i`}
               name={name}
               previewImage={previewImage}
@@ -27,7 +30,7 @@ const CartMovieList = (props) => {
           );
         })}
       </div>
-      { (isShowMore && <ShowMore clickHandler={onClickShowMore} isShow={showFilms < movies.length}/>)}
+      { (isShowMore && <ShowMore onClickButton={onClickShowMore} isShow={showFilms < movies.length}/>)}
 
     </React.Fragment>
   );

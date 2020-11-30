@@ -23,6 +23,30 @@ class Film extends PureComponent {
     this._changeFavoriteHandler = this._changeFavoriteHandler.bind(this);
   }
 
+  componentDidMount() {
+    const {match, loadCommentsAction, films} = this.props;
+    const id = parseInt(match.params.id, 10);
+    const isCorrectId = films.find((it) => it.id === id);
+    if (typeof isCorrectId === `undefined`) {
+      return;
+    }
+
+    Promise.all([loadCommentsAction(id)]);
+  }
+
+  _changeFavoriteHandler() {
+    const {films, addFavoriteAction, removeFavoriteAction, match} = this.props;
+    const film = films[match.params.id - 1];
+
+    if (film) {
+      if (film.isFavorite) {
+        removeFavoriteAction(film.id);
+      } else {
+        addFavoriteAction(film.id);
+      }
+    }
+  }
+
   render() {
     const {user, films, comments, match} = this.props;
     const film = films[match.params.id - 1];
@@ -56,7 +80,7 @@ class Film extends PureComponent {
                 <Buttons
                   user={user}
                   film={film}
-                  clickHandler={this._changeFavoriteHandler}
+                  onClickButton={this._changeFavoriteHandler}
                   isReview={true}
                 />
 
@@ -88,25 +112,6 @@ class Film extends PureComponent {
         </div>
       </React.Fragment>
     );
-  }
-
-  componentDidMount() {
-    const {match, loadCommentsAction} = this.props;
-
-    Promise.all([loadCommentsAction(parseInt(match.params.id, 10))]);
-  }
-
-  _changeFavoriteHandler() {
-    const {films, addFavoriteAction, removeFavoriteAction, match} = this.props;
-    const film = films[match.params.id - 1];
-
-    if (film) {
-      if (film.isFavorite) {
-        removeFavoriteAction(film.id);
-      } else {
-        addFavoriteAction(film.id);
-      }
-    }
   }
 }
 

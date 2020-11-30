@@ -18,6 +18,14 @@ const withCartMovieList = (Component) => {
       this.onClickShowMore = this.onClickShowMore.bind(this);
     }
 
+    componentWillUnmount() {
+      this.setState({
+        activeMovie: -1,
+        timeoutPlayMovie: null,
+        showFilms: null,
+      });
+    }
+
     onHoverCard(id) {
       const currentMovie = this.props.movies.find((movie) => movie.id === id);
       this.setState((prevState) => {

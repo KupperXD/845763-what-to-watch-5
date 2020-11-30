@@ -39,40 +39,6 @@ class SignIn extends PureComponent {
     logError(`Fields email and password is required.`);
   }
 
-  render() {
-
-    const {user, error} = this.props;
-
-    return (
-      <React.Fragment>
-        <div className="user-page">
-
-          <Header className={`user-page__head`} title={`Sign in`} user={user} />
-
-          <div className="sign-in user-page__content">
-            <form action="#" onSubmit={this.handleSubmit} className="sign-in__form">
-
-              <div className="sign-in__message">
-                <p>{error}</p>
-              </div>
-
-              <div className="sign-in__fields">
-                {this._renderField(Fields.EMAIL, `Email address`)}
-
-                {this._renderField(Fields.PASSWORD, `Password`)}
-              </div>
-              <div className="sign-in__submit">
-                <button className="sign-in__btn" type="submit">Sign in</button>
-              </div>
-            </form>
-          </div>
-
-          <Footer />
-        </div>
-      </React.Fragment>
-    );
-  }
-
   _renderField(name, desc) {
     const {form} = this.props;
     const value = form[name] || ``;
@@ -108,7 +74,50 @@ class SignIn extends PureComponent {
       setValue(target.name, target.value);
     }
   }
+
+  render() {
+
+    const {user, error} = this.props;
+
+    return (
+      <React.Fragment>
+        <div className="user-page">
+
+          <Header className={`user-page__head`} title={`Sign in`} user={user} />
+
+          <div className="sign-in user-page__content">
+            <form action="#" onSubmit={this.handleSubmit} className="sign-in__form">
+
+              <div className="sign-in__message">
+                <p>{error}</p>
+              </div>
+
+              <div className="sign-in__fields">
+                {this._renderField(Fields.EMAIL, `Email address`)}
+
+                {this._renderField(Fields.PASSWORD, `Password`)}
+              </div>
+              <div className="sign-in__submit">
+                <button className="sign-in__btn" type="submit">Sign in</button>
+              </div>
+            </form>
+          </div>
+
+          <Footer />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
+
+SignIn.propTypes = {
+  user: PropTypes.object,
+  error: PropTypes.string,
+  logError: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
+  setValue: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   user: getUser(state),
@@ -122,14 +131,6 @@ const mapDispatchToProps = (dispatch) => ({
   logError: (error) => dispatch(ActionCreator.logError(error)),
 });
 
-SignIn.propTypes = {
-  user: PropTypes.object,
-  error: PropTypes.string,
-  logError: PropTypes.func,
-  onSubmit: PropTypes.func.isRequired,
-  setValue: PropTypes.func.isRequired,
-  form: PropTypes.object.isRequired,
-};
 
 const WithFormSign = withFormData(SignIn);
 

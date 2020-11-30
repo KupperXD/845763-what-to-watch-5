@@ -17,16 +17,6 @@ const withActiveItem = (Component) => {
       this._onActiveItem = this._onActiveItem.bind(this);
     }
 
-    render() {
-      return (
-        <Component
-          {...this.props}
-          activeItem={this.state.activeItem}
-          clickHandler={this._onActiveItem}
-        />
-      );
-    }
-
     _onActiveItem(value) {
       this.setState({
         activeItem: value,
@@ -35,6 +25,16 @@ const withActiveItem = (Component) => {
       if (this.props.clickFilterHandler) {
         this.props.clickFilterHandler(value);
       }
+    }
+
+    render() {
+      return (
+        <Component
+          {...this.props}
+          activeItem={this.state.activeItem}
+          onClick={this._onActiveItem}
+        />
+      );
     }
   }
 

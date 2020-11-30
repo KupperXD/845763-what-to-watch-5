@@ -16,9 +16,6 @@ const App = (props) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path="/login/" exact>
-          <SignIn />
-        </Route>
         <Route path="/" exact>
           <Home
             films={films}
@@ -36,10 +33,13 @@ const App = (props) => {
         <Route
           path="/films/:id"
           exact
-          render={({match}) => {
+          render={({match, history}) => {
             const id = +match.params.id;
-
             const currentFilm = films.find((film) => film.id === id);
+
+            if (typeof currentFilm === `undefined`) {
+              history.push(`/login`);
+            }
 
             return (
               <Film
@@ -51,9 +51,13 @@ const App = (props) => {
         <PrivateRoute
           path="/films/:id/review"
           exact
-          render={({match}) => {
+          render={({match, history}) => {
             const id = +match.params.id;
             const currentFilm = films.find((film) => film.id === id);
+
+            if (typeof currentFilm === `undefined`) {
+              history.push(`/login`);
+            }
 
             return (
               <AddReview
@@ -73,6 +77,12 @@ const App = (props) => {
               />);
           }}
         />
+        <Route path="/login/" exact>
+          <SignIn />
+        </Route>
+        <Route>
+          <SignIn />
+        </Route>
       </Switch>
     </BrowserRouter>
   );

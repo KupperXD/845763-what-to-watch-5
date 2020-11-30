@@ -20,6 +20,18 @@ class Home extends PureComponent {
     this._changeFavoriteHandler = this._changeFavoriteHandler.bind(this);
   }
 
+  _changeFavoriteHandler() {
+    const {promoFilm, addFavoriteAction, removeFavoriteAction} = this.props;
+
+    if (promoFilm) {
+      if (promoFilm.isFavorite) {
+        removeFavoriteAction(promoFilm.id);
+      } else {
+        addFavoriteAction(promoFilm.id);
+      }
+    }
+  }
+
   render() {
 
     const {films, user, promoFilm} = this.props;
@@ -56,7 +68,7 @@ class Home extends PureComponent {
                 <Buttons
                   film={promoFilmCurrent}
                   user={user}
-                  clickHandler={this._changeFavoriteHandler}
+                  onClickButton={this._changeFavoriteHandler}
                 />
               </div>
             </div>
@@ -79,17 +91,6 @@ class Home extends PureComponent {
         </div>
       </React.Fragment>
     );
-  }
-  _changeFavoriteHandler() {
-    const {promoFilm, addFavoriteAction, removeFavoriteAction} = this.props;
-
-    if (promoFilm) {
-      if (promoFilm.isFavorite) {
-        removeFavoriteAction(promoFilm.id);
-      } else {
-        addFavoriteAction(promoFilm.id);
-      }
-    }
   }
 }
 
